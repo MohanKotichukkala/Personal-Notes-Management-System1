@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Personal Notes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>My Notes</h1>
+            <a href="{{ url_for('add_note') }}" class="btn">+ New Note</a>
+        </header>
+
+        {% if notes %}
+            {% for note in notes %}
+                <div class="note-card">
+                    <h2>{{ note['title'] }}</h2>
+                    <div class="note-date">Created on: {{ note['created_at'] }}</div>
+                    <p>{{ note['content'] }}</p>
+                    <div class="note-actions">
+                        <a href="{{ url_for('delete_note', id=note['id']) }}" 
+                           class="btn btn-delete" 
+                           onclick="return confirm('Are you sure you want to delete this note?')">Delete</a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No notes yet. Click "+ New Note" to add one!</p>
+        {% endif %}
+    </div>
+</body>
+</html>
